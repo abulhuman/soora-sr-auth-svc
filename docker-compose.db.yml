@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: soora-sr-api-db
+    restart: always
+    ports:
+      - '27017:27017'
+    env_file:
+      - .env
+    volumes:
+      - soora-sr-api-dev_db:/data/db
+
+volumes:
+  soora-sr-api-dev_db:
