@@ -11,8 +11,8 @@ import { PasswordService } from './service/password.service';
 import { JwtService } from './service/jwt.service';
 import { securityConfigConstants } from 'src/common/configs/security.config.schema';
 
-
-require('dotenv').config()
+import { config as dotenv } from 'dotenv';
+dotenv();
 const config = new ConfigService();
 
 @Module({
@@ -21,8 +21,8 @@ const config = new ConfigService();
     MongooseModule.forFeature([
       {
         name: Auth.name,
-        schema: AuthSchema
-      }
+        schema: AuthSchema,
+      },
     ]),
     PassportModule.register({
       session: true,
@@ -32,12 +32,19 @@ const config = new ConfigService();
     JwtModule.register({
       global: true,
       secret: config.get<string>(securityConfigConstants.JWT_SECRET),
-      signOptions: { expiresIn: config.get<string>(securityConfigConstants.JWT_EXPIRES_IN) },
-    })
+      signOptions: {
+        expiresIn: config.get<string>(securityConfigConstants.JWT_EXPIRES_IN),
+      },
+    }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, PasswordService, JwtService, JwtStrategy, ConfigService],
-  exports: [ConfigService]
+  providers: [
+    AuthService,
+    PasswordService,
+    JwtService,
+    JwtStrategy,
+    ConfigService,
+  ],
+  exports: [ConfigService],
 })
-export class AuthModule { }
-
+export class AuthModule {}

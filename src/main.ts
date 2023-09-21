@@ -11,14 +11,17 @@ import { appConfigConstants } from './common/configs/app.config.schema';
 const config = new ConfigService();
 
 async function bootstrap() {
-  const app: INestMicroservice = await NestFactory.createMicroservice(AppModule, {
-    transport: Transport.GRPC,
-    options: {
-      url: `0.0.0.0:${config.get<string>(appConfigConstants.GRPC_SVC_PORT)}`,
-      package: protobufPackage,
-      protoPath: join('node_modules/soora-sr-proto/proto/auth.proto'),
+  const app: INestMicroservice = await NestFactory.createMicroservice(
+    AppModule,
+    {
+      transport: Transport.GRPC,
+      options: {
+        url: `0.0.0.0:${config.get<string>(appConfigConstants.GRPC_SVC_PORT)}`,
+        package: protobufPackage,
+        protoPath: join('node_modules/soora-sr-proto/proto/auth.proto'),
+      },
     },
-  });
+  );
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
