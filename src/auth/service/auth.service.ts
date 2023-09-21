@@ -50,7 +50,7 @@ export class AuthService {
     }
 
     public async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
-        const decoded: AuthDocument = await this.jwtService.verify(token);
+        const decoded = await this.jwtService.verify(token);
 
         if (!decoded) {
             return { status: HttpStatus.FORBIDDEN, error: ['Token is invalid'], userId: null };
@@ -62,6 +62,6 @@ export class AuthService {
             return { status: HttpStatus.NOT_FOUND, error: ['User not found'], userId: null };
         }
 
-        return { status: HttpStatus.OK, error: null, userId: decoded._id.toString() };
+        return { status: HttpStatus.OK, error: null, userId: decoded.id };
     }
 }

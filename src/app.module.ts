@@ -11,14 +11,19 @@ import { securityConfigSchema } from './common/configs/security.config.schema';
 const config = new ConfigService();
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-    validationSchema: Joi.object({
-      ...appConfigSchema,
-      ...securityConfigSchema
-    })
-  }), AuthModule,
-  MongooseModule.forRoot(config.get<string>(appConfigConstants.DATABASE_URL))
+  imports: [
+    ConfigModule
+      .forRoot({
+        isGlobal: true,
+        validationSchema: Joi.object({
+          ...appConfigSchema,
+          ...securityConfigSchema
+        })
+      }),
+    AuthModule,
+    MongooseModule
+      .forRoot(config
+        .get<string>(appConfigConstants.DATABASE_URL))
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],

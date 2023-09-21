@@ -4,6 +4,7 @@ import { Auth, AuthDocument } from '../auth.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { PasswordService } from './password.service';
 import { Model } from 'mongoose';
+import { JWTPayload } from '../jwt.payload';
 
 @Injectable()
 export class JwtService {
@@ -30,7 +31,7 @@ export class JwtService {
     }
 
     // Validate JWT Token, throw forbidden error if JWT Token is invalid
-    public async verify(token: string): Promise<any> {
+    public async verify(token: string): Promise<JWTPayload> {
         try {
             return this.jwt.verify(token);
         } catch (err) { }

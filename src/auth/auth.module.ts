@@ -12,11 +12,12 @@ import { JwtService } from './service/jwt.service';
 import { securityConfigConstants } from 'src/common/configs/security.config.schema';
 
 
+require('dotenv').config()
 const config = new ConfigService();
 
 @Module({
   imports: [
-    ConfigModule,
+    ConfigModule.forRoot(),
     MongooseModule.forFeature([
       {
         name: Auth.name,
