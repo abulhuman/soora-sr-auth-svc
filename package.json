@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/abulhuman/soora-sr-proto.git",
     "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/soora-sr-proto/proto --ts_proto_out=src/auth/ node_modules/soora-sr-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "postinstall": "npm run proto:install",
+    "postinstall": "npm run proto:install && npm run proto:auth",
     "docker:db": "docker compose -f docker-compose.db.yml up -d"
   },
   "dependencies": {
